@@ -1,6 +1,7 @@
 import { Book } from "./Book.js";
 import { InventoryManager } from "./InventoryManager.js";
 import { User } from "./User.js";
+import { deleteFromArray } from "./utils.js";
 
 export class BorrowingSystem{
     private borrows:Record<string,Book[]>
@@ -31,11 +32,40 @@ export class BorrowingSystem{
         }
 
     }
-    borrowSpecificCopy(book:Book){
+    borrowSpecificCopy(book:Book,borrower:User){
+         if(!this.borrows[borrower._email]){
+            this.borrows[borrower._email]=[]
+        }
+
+        if(book.isBorrowed){
+            console.log("this copy already borrowed")
+            return
+        }
+
+        this.borrows[borrower._email].push(book)
+        book.isBorrowed=true
+
 
     }
 
-    returnBook(book:Book){
-        
+    returnBook(book:Book,borrower:User){
+         if(!this.borrows[borrower._email]){
+            console.log("this user didn't borrow any thing")
+        }
+
+        if(!book.isBorrowed){
+            console.log("this copy not borrowed")
+            return
+        }
+
+       if(this.borrows[borrower._email].includes(book))
+       {
+         console.log("this copy not borrowed by this user")
+            return
+       }
+
+        deleteFromArray(book,this.borrows[borrower._email])
+        book.isBorrowed=false
+
     }
 }
