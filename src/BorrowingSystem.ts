@@ -6,9 +6,9 @@ import { deleteFromArray } from "./utils.js";
 export class BorrowingSystem{
     private borrows:Record<string,Book[]>
     private inventory:InventoryManager
-    constructor(invetory:InventoryManager){
+    constructor(inventory:InventoryManager){
         this.borrows={}
-        this.inventory=invetory
+        this.inventory=inventory
     }
 
     borrowBookCopy(book:Book,borrower:User){
@@ -18,15 +18,15 @@ export class BorrowingSystem{
         }
         if(copies.length===0)
         {
-            console.log("there's no copy for this book")
-            return
+            throw new Error("there's no copy for this book")
+            
         }
         for(let copy of copies)
         {
             if (!copy.isBorrowed){
                 this.borrows[borrower._email].push(copy)
                 copy.isBorrowed=true
-                console.log(`user wwith email ${borrower._email} borrowed copy with copyID ${copy._copyId} and isbn ${copy._copyId}`)
+                console.log(`user with email ${borrower._email} borrowed copy with copyID ${copy._copyId} and isbn ${copy._copyId}`)
                 return
             }
         }
@@ -38,8 +38,7 @@ export class BorrowingSystem{
         }
 
         if(book.isBorrowed){
-            console.log("this copy already borrowed")
-            return
+           throw new Error("this copy already borrowed")
         }
 
         this.borrows[borrower._email].push(book)
@@ -50,18 +49,18 @@ export class BorrowingSystem{
 
     returnBook(book:Book,borrower:User){
          if(!this.borrows[borrower._email]){
-            console.log("this user didn't borrow any thing")
+            throw new Error("this user didn't borrow any thing")
+            return
         }
 
         if(!book.isBorrowed){
-            console.log("this copy not borrowed")
+           throw new Error("this copy not borrowed")
             return
         }
 
-       if(this.borrows[borrower._email].includes(book))
+       if(!this.borrows[borrower._email].includes(book))
        {
-         console.log("this copy not borrowed by this user")
-            return
+        throw new Error("this copy not borrowed by this user")
        }
 
         deleteFromArray(book,this.borrows[borrower._email])
