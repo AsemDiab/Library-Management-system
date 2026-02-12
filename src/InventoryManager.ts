@@ -15,6 +15,10 @@ export class InventoryManager {
   }
 
   removeBook(book: Book): void {
+    if (!this.books[book._isbn]) {
+      return;
+    }
+
     delete this.books[book._isbn][book._copyId];
   }
 

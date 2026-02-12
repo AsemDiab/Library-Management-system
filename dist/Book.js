@@ -10,7 +10,7 @@ export class Book {
         this.copyID = Book.booksCount++;
     }
     get _title() { return this.title; }
-    get _auther() { return this.author; }
+    get _author() { return this.author; }
     get _isbn() { return this.isbn; }
     get _copyId() { return this.copyID; }
     get isBorrowed() {

@@ -5,6 +5,8 @@ class User for Users entity
 */
 
 import { EmailValidator } from "./EmailValidator.js";
+import { NameValidator } from "./NameValidator.js";
+import { StringValidatorBase } from "./StringValidatorBase.js";
 
 export class User {
   private name: string;
@@ -14,12 +16,13 @@ export class User {
   constructor(
     name: string,
     email: string,
-    emailValidator: EmailValidator,
+    nameValidator: StringValidatorBase,
+    emailValidator: StringValidatorBase,
   ) {
     if (!emailValidator.validate(email)) {
       throw new Error(`Invalid email format: ${email}. Please provide a valid email address.`);
     }
-    if (name.trim().length===0) {
+    if (!nameValidator.validate(name)) {
       throw new Error("Invalid name: Name cannot be empty. Please provide a valid name.");
     }
 

@@ -9,6 +9,9 @@ export class InventoryManager {
         this.books[book._isbn][book._copyId] = book;
     }
     removeBook(book) {
+        if (!this.books[book._isbn]) {
+            return;
+        }
         delete this.books[book._isbn][book._copyId];
     }
     checkExist(book) {

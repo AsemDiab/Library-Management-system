@@ -1,18 +1,19 @@
-import { EmailValidator } from "./EmailValidator.js";
 import { User } from "./User.js";
 export class UsersManager {
-    constructor() {
+    // Constructor
+    constructor(nameValidator, emailValidator) {
         this.users = {};
         this.loggedInUsers = new Set();
+        this.emailValidator = emailValidator;
+        this.nameValidator = nameValidator;
     }
     // User registration
     signUp(name, email) {
-        console.log("this.users[email]", this.users[email]);
         if (this.users[email] != undefined)
             throw new Error(`Registration failed: Email '${email}' is already registered. Please use a different email or try logging in.`);
         let user;
         try {
-            user = new User(name, email, new EmailValidator());
+            user = new User(name, email, this.nameValidator, this.emailValidator);
             this.users[email] = user;
         }
         catch (error) {
