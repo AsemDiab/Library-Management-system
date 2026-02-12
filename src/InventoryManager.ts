@@ -1,0 +1,28 @@
+import { Book } from "./Book.js";
+
+export class InventoryManager {
+  private books: Record<string, Record<number, Book>>;
+
+  constructor() {
+    this.books = {};
+  }
+
+  addBook(book: Book): void {
+    if (!this.books[book._isbn]) {
+      this.books[book._isbn] = {};
+    }
+    this.books[book._isbn][book._copyId] = book;
+  }
+
+  removeBook(book: Book): void {
+    delete this.books[book._isbn][book._copyId];
+  }
+
+  checkExist(book: Book): boolean {
+    return this.books[book._isbn]?.[book._copyId] != undefined;
+  }
+
+  getBookCopies(book: Book): Book[] {
+    return this.books[book._isbn] ? Object.values(this.books[book._isbn]) : [];
+  }
+}
