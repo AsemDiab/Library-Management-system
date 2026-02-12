@@ -50,12 +50,12 @@ export class BorrowingSystem{
     returnBook(book:Book,borrower:User){
          if(!this.borrows[borrower._email]){
             throw new Error("this user didn't borrow any thing")
-            return
+            
         }
 
         if(!book.isBorrowed){
            throw new Error("this copy not borrowed")
-            return
+            
         }
 
        if(!this.borrows[borrower._email].includes(book))

@@ -9,6 +9,7 @@ export class BorrowingSystem {
         if (!this.borrows[borrower._email]) {
             this.borrows[borrower._email] = [];
         }
+        console.log("copies: ", copies.length);
         if (copies.length === 0) {
             throw new Error("there's no copy for this book");
         }
@@ -34,11 +35,9 @@ export class BorrowingSystem {
     returnBook(book, borrower) {
         if (!this.borrows[borrower._email]) {
             throw new Error("this user didn't borrow any thing");
-            return;
         }
         if (!book.isBorrowed) {
             throw new Error("this copy not borrowed");
-            return;
         }
         if (!this.borrows[borrower._email].includes(book)) {
             throw new Error("this copy not borrowed by this user");

@@ -1,7 +1,7 @@
 import { EmailValidator } from "./EmailValidator.js";
 import { User } from "./User.js";
 
-export class UserManager {
+export class UsersManager {
     private users: Record<string, User>;
     private loggedInUsers: Set<string>;
 
@@ -12,11 +12,13 @@ export class UserManager {
     
     // User registration
     signUp(name: string, email: string): User{
-        if(this.users[email]!==undefined)
+        console.log("this.users[email]",this.users[email])
+        if(this.users[email]!=undefined)
             throw new Error("This email already taken")
         let user:User|null;
         try{
             user=new User(name,email,new EmailValidator())
+            this.users[email]=user
         }catch(error){
             throw error
         }
@@ -25,10 +27,9 @@ export class UserManager {
     
     // User authentication
     login(email: string): User | null{
-        if(this.users[email]==undefined)
+        if(this.users[email]===undefined)
         {
-            console.log("This email not linked to any user")
-            return null
+            throw new Error("This email not linked to any user")
         }
 
         this.loggedInUsers.add(email)

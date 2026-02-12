@@ -17,7 +17,10 @@ export class User {
     emailValidator: EmailValidator,
   ) {
     if (!emailValidator.validate(email)) {
-      throw new Error(email + " :Invalid enmail");
+      throw new Error(email + " email");
+    }
+    if (name.length===0) {
+      throw new Error(" :Invalid name: the name shouldn't be empty");
     }
 
     this.name = name;
