@@ -3,7 +3,7 @@ Book class is class for storing information of book in one object that is only p
 */
 export class Book {
     constructor(title, author, isbn) {
-        this.isBorrowed = false;
+        this._isBorrowed = false;
         this.author = author;
         this.title = title;
         this.isbn = isbn;
@@ -13,5 +13,11 @@ export class Book {
     get _auther() { return this.author; }
     get _isbn() { return this.isbn; }
     get _copyId() { return this.copyID; }
+    get isBorrowed() {
+        return this._isBorrowed;
+    }
+    set isBorrowed(newValue) {
+        this._isBorrowed = newValue;
+    }
 }
 Book.booksCount = 0;

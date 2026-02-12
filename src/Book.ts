@@ -8,7 +8,7 @@ export class Book{
     private title:string
     private author:string
     private isbn:string
-    public isBorrowed: boolean = false;
+    private _isBorrowed: boolean = false;
 
     constructor(title:string,author:string, isbn:string){
         this.author=author
@@ -19,7 +19,13 @@ export class Book{
     }
 
     get _title():string{return this.title}
-    get _auther():string{return this.author}
+    get _author():string{return this.author}
     get _isbn():string{return this.isbn}
     get _copyId():number{return this.copyID}
+    get isBorrowed():boolean{
+        return this._isBorrowed
+    }
+    set isBorrowed(newValue){
+        this._isBorrowed=newValue
+    }
 }

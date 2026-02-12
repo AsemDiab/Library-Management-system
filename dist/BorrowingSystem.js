@@ -9,9 +9,8 @@ export class BorrowingSystem {
         if (!this.borrows[borrower._email]) {
             this.borrows[borrower._email] = [];
         }
-        console.log("copies: ", copies.length);
         if (copies.length === 0) {
-            throw new Error("there's no copy for this book");
+            throw new Error(`Borrowing failed: No available copies for book '${book._title}' (ISBN: ${book._isbn}). All copies are currently borrowed.`);
         }
         for (let copy of copies) {
             if (!copy.isBorrowed) {
@@ -27,20 +26,20 @@ export class BorrowingSystem {
             this.borrows[borrower._email] = [];
         }
         if (book.isBorrowed) {
-            throw new Error("this copy already borrowed");
+            throw new Error(`Cannot borrow book '${book._title}' (Copy ID: ${book._copyId}): This copy is already borrowed by another user.`);
         }
         this.borrows[borrower._email].push(book);
         book.isBorrowed = true;
     }
     returnBook(book, borrower) {
         if (!this.borrows[borrower._email]) {
-            throw new Error("this user didn't borrow any thing");
+            throw new Error(`Return failed: User '${borrower._email}' has no borrowed books to return.`);
         }
         if (!book.isBorrowed) {
-            throw new Error("this copy not borrowed");
+            throw new Error(`Return failed: Book '${book._title}' (Copy ID: ${book._copyId}) is not currently borrowed.`);
         }
         if (!this.borrows[borrower._email].includes(book)) {
-            throw new Error("this copy not borrowed by this user");
+            throw new Error(`Return failed: Book '${book._title}' (Copy ID: ${book._copyId}) was not borrowed by user '${borrower._email}'.`);
         }
         deleteFromArray(book, this.borrows[borrower._email]);
         book.isBorrowed = false;

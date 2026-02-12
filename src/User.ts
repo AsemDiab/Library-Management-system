@@ -17,10 +17,10 @@ export class User {
     emailValidator: EmailValidator,
   ) {
     if (!emailValidator.validate(email)) {
-      throw new Error(email + " email");
+      throw new Error(`Invalid email format: ${email}. Please provide a valid email address.`);
     }
-    if (name.length===0) {
-      throw new Error(" :Invalid name: the name shouldn't be empty");
+    if (name.trim().length===0) {
+      throw new Error("Invalid name: Name cannot be empty. Please provide a valid name.");
     }
 
     this.name = name;

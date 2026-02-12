@@ -12,9 +12,8 @@ export class UsersManager {
     
     // User registration
     signUp(name: string, email: string): User{
-        console.log("this.users[email]",this.users[email])
         if(this.users[email]!=undefined)
-            throw new Error("This email already taken")
+            throw new Error(`Registration failed: Email '${email}' is already registered. Please use a different email or try logging in.`);
         let user:User|null;
         try{
             user=new User(name,email,new EmailValidator())
@@ -26,10 +25,10 @@ export class UsersManager {
     }
     
     // User authentication
-    login(email: string): User | null{
+    login(email: string): User {
         if(this.users[email]===undefined)
         {
-            throw new Error("This email not linked to any user")
+            throw new Error(`Login failed: No account found for email '${email}'. Please check your email or register for a new account.`);
         }
 
         this.loggedInUsers.add(email)
