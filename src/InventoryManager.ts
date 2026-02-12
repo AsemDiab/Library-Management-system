@@ -25,4 +25,11 @@ export class InventoryManager {
   getBookCopies(book: Book): Book[] {
     return this.books[book._isbn] ? Object.values(this.books[book._isbn]) : [];
   }
+  get _books(): { isbn: string; copies: Book[] }[] {
+    return Object.keys(this.books)
+      .map((isbn: string) => {
+        const copies: Book[] = Object.values(this.books[isbn]);
+        return { isbn, copies };
+      });
+  }
 }

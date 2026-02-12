@@ -1,29 +1,48 @@
 import { Book } from "./Book.js";
+import { BorrowingSystem } from "./BorrowingSystem.js";
+import { InventoryManager } from "./InventoryManager.js";
+import { User } from "./User.js";
 
 export class Library {
-    private books:Book[]
+    private inventory:InventoryManager
+    private borrowingSystem:BorrowingSystem
 
-    constructor(){
-        this.books=[]
-    }
-
-    addBook(newBook:Book){
-
-    }
-
-    removeBook(Book:Book){
+    constructor(inventory:InventoryManager,borrowingSystem:BorrowingSystem){
+        this.inventory=inventory
+        this.borrowingSystem=borrowingSystem
 
     }
 
-    get _books():Book[]{
-        return this._books
+    addBook(newBook:Book):boolean{
+        try{
+            
+            this.inventory.addBook(newBook)
+            return true
+        }
+        catch{
+            return false
+        }
     }
-    
-    BorrowBook(){
 
+    removeBook(book:Book):void{
+        this.inventory.removeBook(book)
     }
 
-    returnBook(){
+    get _book():{ isbn: string; copies: Book[] }[]{
+        return this.inventory._books
+    }
 
+    borrowBookCopy(book:Book,user:User):void{
+        this.borrowingSystem.borrowBookCopy(book,user)
+    }
+
+    returnBook(book:Book,user:User):void{
+        this.borrowingSystem.returnBook(book,user)
+    }
+    borrowSpecificCopy(book:Book,user:User):void{
+        this.borrowingSystem.borrowSpecificCopy(book,user)
+    }
+    get borrowingOperations():Record<string,Book[]>{
+        return this.borrowingSystem.borrowingOperations
     }
 }

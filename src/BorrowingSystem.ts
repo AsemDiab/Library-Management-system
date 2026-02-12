@@ -26,7 +26,7 @@ export class BorrowingSystem{
             if (!copy.isBorrowed){
                 this.borrows[borrower._email].push(copy)
                 copy.isBorrowed=true
-                console.log(`user with email ${borrower._email} borrowed copy with copyID ${copy._copyId} and isbn ${copy._copyId}`)
+                console.log(`user with email ${borrower._email} borrowed copy with copyID ${copy._copyId} and isbn ${copy._isbn}`)
                 return
             }
         }
@@ -66,5 +66,9 @@ export class BorrowingSystem{
         deleteFromArray(book,this.borrows[borrower._email])
         book.isBorrowed=false
 
+    }
+
+    get borrowingOperations():Record<string,Book[]>{
+        return this.borrows
     }
 }

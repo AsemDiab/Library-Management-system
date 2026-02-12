@@ -1,16 +1,27 @@
 export class Library {
-    constructor() {
-        this.books = [];
+    constructor(inventory, borrowingSystem) {
+        this.inventory = inventory;
+        this.borrowingSystem = borrowingSystem;
     }
     addBook(newBook) {
+        this.inventory.addBook(newBook);
     }
-    removeBook(Book) {
+    removeBook(book) {
+        this.inventory.removeBook(book);
     }
-    get _books() {
-        return this._books;
+    get _book() {
+        return this.inventory._books;
     }
-    BorrowBook() {
+    borrowBookCopy(book, user) {
+        this.borrowingSystem.borrowBookCopy(book, user);
     }
-    returnBook() {
+    returnBook(book, user) {
+        this.borrowingSystem.returnBook(book, user);
+    }
+    borrowSpecificCopy(book, user) {
+        this.borrowingSystem.borrowSpecificCopy(book, user);
+    }
+    get borrowingOperations() {
+        return this.borrowingSystem.borrowingOperations;
     }
 }
