@@ -1,7 +1,7 @@
 import { Book } from "./Book";
 import { InventoryManager } from "./InventoryManager";
 import { User } from "./User";
-import { deleteFromArray } from "./utils";
+import { deleteFromArray } from "./common/utils";
 
 export class BorrowingSystem {
   private borrows: Record<string, Book[]>;
